@@ -197,6 +197,7 @@ footer {
   gap: 24px;
   overflow: hidden;
   will-change: transform;
+  min-width: max-content;
 }
 
 /* 滑動動畫 class（會在 JS 觸發） */
@@ -227,18 +228,6 @@ footer {
   height: 530px;
   background-color: black;
   overflow: hidden;
-}
-
-.video-shell iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.video-shell iframe.loaded {
-  opacity: 1;
 }
 
 .lazy-iframe {
