@@ -189,19 +189,21 @@
       const cardWidthWithGap = cardWidth;
 
       if (direction === 1) {
-        // 👉 右滑 → 把第一張移到最後，預偏移 +動畫滑正
-        const firstCard = carousel.querySelector(".video-card");
-        carousel.appendChild(firstCard);
-
-        carousel.style.transition = "none";
+        // 👉 右滑 → 先滑動 → 再補尾部元素到後面
+        carousel.style.transition = "transform 0.4s ease";
         carousel.style.transform = `translateX(-${cardWidthWithGap}px)`;
 
-        void carousel.offsetWidth; // 強迫 reflow
+        setTimeout(() => {
+          carousel.style.transition = "none";
+          carousel.style.transform = "none";
 
-        carousel.style.transition = "transform 0.4s ease";
-        carousel.style.transform = "translateX(0)";
+          const firstCard = carousel.querySelector(".video-card");
+          carousel.appendChild(firstCard);
+
+          isAnimating = false;
+        }, 400);
       } else {
-        // 👈 左滑 → 把最後一張插到最前面，預偏移右一格 +動畫滑回
+        // 👈 左滑 → 先補前面 → offset → 滑動回來
         const cards = carousel.querySelectorAll(".video-card");
         const last = cards[cards.length - 1];
         carousel.insertBefore(last, cards[0]);
@@ -209,17 +211,17 @@
         carousel.style.transition = "none";
         carousel.style.transform = `translateX(-${cardWidthWithGap}px)`;
 
-        void carousel.offsetWidth;
+        void carousel.offsetWidth; // force reflow
 
         carousel.style.transition = "transform 0.4s ease";
         carousel.style.transform = "translateX(0)";
-      }
 
-      setTimeout(() => {
-        carousel.style.transition = "none";
-        carousel.style.transform = "none";
-        isAnimating = false;
-      }, 400);
+        setTimeout(() => {
+          carousel.style.transition = "none";
+          carousel.style.transform = "none";
+          isAnimating = false;
+        }, 400);
+      }
     }
 
     function pauseAutoScroll() {
