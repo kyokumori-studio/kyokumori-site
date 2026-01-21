@@ -194,14 +194,36 @@
     }
 
     function scrollCarousel(direction) {
-      // 支援左右按鈕（目前只實作右）
-      if (direction === 1) {
-        slideOnce();
-      } else {
-        // 如果想支援左滑，要多一步：先將最後一張搬到前面，再從右滑入
-        if (isAnimating) return;
-        isAnimating = true;
+      if (isAnimating) return;
+      isAnimating = true;
 
+      if (direction === 1) {
+        // ➤ 右滑 → 先偏移整排位置，然後動畫滑回來
+
+        const firstCard = carousel.querySelector(".video-card");
+        const cardWidthWithGap = cardWidth;
+
+        // ✅ 先 append 卡片（站定位）
+        carousel.appendChild(firstCard);
+
+        // ✅ 馬上拉整排過去，模擬「已滑過一格」的樣子
+        carousel.style.transition = "none";
+        carousel.style.transform = `translateX(-${cardWidthWithGap}px)`;
+
+        // ✅ 強制觸發 reflow，讓 transform 生效
+        void carousel.offsetWidth;
+
+        // ✅ 再滑回來（畫面上是滑動，但實際 DOM 已經重排）
+        carousel.style.transition = "transform 0.4s ease";
+        carousel.style.transform = "translateX(0)";
+
+        setTimeout(() => {
+          carousel.style.transition = "none";
+          carousel.style.transform = "none";
+          isAnimating = false;
+        }, 400);
+      } else {
+        // ➤ 左滑 → 將最後一張插到最前，再動畫向右滑入（你原本的邏輯是對的）
         const cards = carousel.querySelectorAll(".video-card");
         const last = cards[cards.length - 1];
         carousel.insertBefore(last, cards[0]);
@@ -214,12 +236,14 @@
           carousel.style.transform = `translateX(0px)`;
 
           setTimeout(() => {
-            carousel.style.transition = "";
+            carousel.style.transition = "none";
+            carousel.style.transform = "none";
             isAnimating = false;
           }, 400);
         });
       }
     }
+
 
     function pauseAutoScroll() {
       isHovered = true;
