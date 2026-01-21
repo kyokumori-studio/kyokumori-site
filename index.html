@@ -72,20 +72,34 @@
             </div>
             <div class="video-card">
               <div class="video-shell">
-                <iframe src="https://www.youtube.com/embed/at9pIv1SDfE" loading="lazy" decoding="async" allowfullscreen
-                  class="lazy-iframe"></iframe>
+                <iframe loading="lazy" decoding="async" width="337" height="599"
+                  src="https://www.youtube.com/embed/at9pIv1SDfE" frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerpolicy="strict-origin-when-cross-origin" allowfullscreen class="lazy-iframe"></iframe>
               </div>
             </div>
             <div class="video-card">
               <div class="video-shell">
-                <iframe src="https://www.youtube.com/embed/at9pIv1SDfE" loading="lazy" decoding="async" allowfullscreen
-                  class="lazy-iframe"></iframe>
+                <iframe loading="lazy" decoding="async" width="337" height="599"
+                  src="https://www.youtube.com/embed/Z5gCOttIj9E" frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerpolicy="strict-origin-when-cross-origin" allowfullscreen class="lazy-iframe"></iframe>
               </div>
             </div>
             <div class="video-card">
               <div class="video-shell">
-                <iframe src="https://www.youtube.com/embed/at9pIv1SDfE" loading="lazy" decoding="async" allowfullscreen
-                  class="lazy-iframe"></iframe>
+                <iframe loading="lazy" decoding="async" width="337" height="599"
+                  src="https://www.youtube.com/embed/at9pIv1SDfE" frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerpolicy="strict-origin-when-cross-origin" allowfullscreen class="lazy-iframe"></iframe>
+              </div>
+            </div>
+            <div class="video-card">
+              <div class="video-shell">
+                <iframe loading="lazy" decoding="async" width="337" height="599"
+                  src="https://www.youtube.com/embed/Z5gCOttIj9E" frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerpolicy="strict-origin-when-cross-origin" allowfullscreen class="lazy-iframe"></iframe>
               </div>
             </div>
           </div>
@@ -165,85 +179,48 @@
     }
 
     function slideOnce() {
-      if (isAnimating) return;
-      isAnimating = true;
-
-      const cardWidthWithGap = cardWidth; // 已有 gap 加成
-      const firstCard = carousel.querySelector(".video-card");
-
-      // ✅ 預先 append 第一張卡片到最後（讓動畫時已在場景中）
-      carousel.appendChild(firstCard);
-
-      // ✅ 立刻移動 carousel 整排到「-1 張」的位置
-      carousel.style.transition = 'none';
-      carousel.style.transform = `translateX(-${cardWidthWithGap}px)`;
-
-      // ✅ 強迫瀏覽器重繪（讓 transform 生效）
-      void carousel.offsetWidth;
-
-      // ✅ 開始動畫回到 0，像是把畫面拉正
-      carousel.style.transition = 'transform 0.4s ease';
-      carousel.style.transform = 'translateX(0)';
-
-      // ✅ 動畫結束後，reset 狀態
-      setTimeout(() => {
-        carousel.style.transition = 'none';
-        carousel.style.transform = 'none';
-        isAnimating = false;
-      }, 400);
+      scrollCarousel(1); // 右滑
     }
 
     function scrollCarousel(direction) {
       if (isAnimating) return;
       isAnimating = true;
 
+      const cardWidthWithGap = cardWidth;
+
       if (direction === 1) {
-        // ➤ 右滑 → 先偏移整排位置，然後動畫滑回來
-
+        // 👉 右滑 → 把第一張移到最後，預偏移 +動畫滑正
         const firstCard = carousel.querySelector(".video-card");
-        const cardWidthWithGap = cardWidth;
-
-        // ✅ 先 append 卡片（站定位）
         carousel.appendChild(firstCard);
 
-        // ✅ 馬上拉整排過去，模擬「已滑過一格」的樣子
         carousel.style.transition = "none";
         carousel.style.transform = `translateX(-${cardWidthWithGap}px)`;
 
-        // ✅ 強制觸發 reflow，讓 transform 生效
-        void carousel.offsetWidth;
+        void carousel.offsetWidth; // 強迫 reflow
 
-        // ✅ 再滑回來（畫面上是滑動，但實際 DOM 已經重排）
         carousel.style.transition = "transform 0.4s ease";
         carousel.style.transform = "translateX(0)";
-
-        setTimeout(() => {
-          carousel.style.transition = "none";
-          carousel.style.transform = "none";
-          isAnimating = false;
-        }, 400);
       } else {
-        // ➤ 左滑 → 將最後一張插到最前，再動畫向右滑入（你原本的邏輯是對的）
+        // 👈 左滑 → 把最後一張插到最前面，預偏移右一格 +動畫滑回
         const cards = carousel.querySelectorAll(".video-card");
         const last = cards[cards.length - 1];
         carousel.insertBefore(last, cards[0]);
 
         carousel.style.transition = "none";
-        carousel.style.transform = `translateX(-${cardWidth}px)`;
+        carousel.style.transform = `translateX(-${cardWidthWithGap}px)`;
 
-        requestAnimationFrame(() => {
-          carousel.style.transition = "transform 0.4s ease";
-          carousel.style.transform = `translateX(0px)`;
+        void carousel.offsetWidth;
 
-          setTimeout(() => {
-            carousel.style.transition = "none";
-            carousel.style.transform = "none";
-            isAnimating = false;
-          }, 400);
-        });
+        carousel.style.transition = "transform 0.4s ease";
+        carousel.style.transform = "translateX(0)";
       }
-    }
 
+      setTimeout(() => {
+        carousel.style.transition = "none";
+        carousel.style.transform = "none";
+        isAnimating = false;
+      }, 400);
+    }
 
     function pauseAutoScroll() {
       isHovered = true;
