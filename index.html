@@ -52,18 +52,43 @@
       <div class="carousel-wrapper" onmouseenter="hoverEnter()" onmouseleave="hoverLeave()">
         <button class="arrow left" onclick="scrollCarousel(-1)">←</button>
 
-        <div class="carousel" id="video-carousel">
-          <div class="video-card"><iframe width="337" height="599" src="https://www.youtube.com/embed/at9pIv1SDfE"
-              frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
-          <div class="video-card"><iframe width="337" height="599" src="https://www.youtube.com/embed/Z5gCOttIj9E"
-              frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
-          <div class="video-card"><iframe src="https://www.youtube.com/embed/影片ID3" allowfullscreen></iframe></div>
-          <div class="video-card"><iframe src="https://www.youtube.com/embed/影片ID4" allowfullscreen></iframe></div>
-          <div class="video-card"><iframe src="https://www.youtube.com/embed/影片ID5" allowfullscreen></iframe></div>
+        <div class="carousel-window">
+          <div class="carousel" id="video-carousel">
+            <div class="video-card">
+              <div class="video-shell">
+                <iframe loading="lazy" decoding="async" width="337" height="599"
+                  src="https://www.youtube.com/embed/at9pIv1SDfE" frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerpolicy="strict-origin-when-cross-origin" allowfullscreen class="lazy-iframe"></iframe>
+              </div>
+            </div>
+            <div class="video-card">
+              <div class="video-shell">
+                <iframe loading="lazy" decoding="async" width="337" height="599"
+                  src="https://www.youtube.com/embed/Z5gCOttIj9E" frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerpolicy="strict-origin-when-cross-origin" allowfullscreen class="lazy-iframe"></iframe>
+              </div>
+            </div>
+            <div class="video-card">
+              <div class="video-shell">
+                <iframe src="https://www.youtube.com/embed/at9pIv1SDfE" loading="lazy" decoding="async" allowfullscreen
+                  class="lazy-iframe"></iframe>
+              </div>
+            </div>
+            <div class="video-card">
+              <div class="video-shell">
+                <iframe src="https://www.youtube.com/embed/at9pIv1SDfE" loading="lazy" decoding="async" allowfullscreen
+                  class="lazy-iframe"></iframe>
+              </div>
+            </div>
+            <div class="video-card">
+              <div class="video-shell">
+                <iframe src="https://www.youtube.com/embed/at9pIv1SDfE" loading="lazy" decoding="async" allowfullscreen
+                  class="lazy-iframe"></iframe>
+              </div>
+            </div>
+          </div>
         </div>
 
         <button class="arrow right" onclick="scrollCarousel(1)">→</button>
@@ -122,112 +147,130 @@
     </div>
   </footer>
 
-<script>
-  const carousel = document.getElementById("video-carousel");
-  const gap = 24;
-  let cardWidth;
-  let autoScrollTimer;
-  let isHovered = false;
-  let isAnimating = false;
+  <script>
+    const carousel = document.getElementById("video-carousel");
+    const gap = 24;
+    let cardWidth;
+    let isAnimating = false;
+    let autoScrollTimer;
+    let isHovered = false;
 
-  function setupTrueInfiniteCarousel() {
-    const cards = carousel.querySelectorAll(".video-card");
-    cardWidth = cards[0].offsetWidth + gap;
+    function setupReorderCarousel() {
+      const cards = carousel.querySelectorAll(".video-card");
+      cardWidth = carousel.querySelector(".video-card").offsetWidth + gap;
 
-    autoScrollTimer = setInterval(() => {
-      if (!isHovered) scrollCarousel(1);
-    }, 3000);
-  }
+      autoScrollTimer = setInterval(() => {
+        if (!isHovered) slideOnce();
+      }, 3000);
+    }
 
-  function scrollCarousel(direction) {
-    if (isAnimating) return;
-    isAnimating = true;
+    function slideOnce() {
+      if (isAnimating) return;
+      isAnimating = true;
 
-    const scrollAmount = direction * cardWidth;
-    const start = carousel.scrollLeft;
-    const end = start + scrollAmount;
-    const duration = 300;
-    const startTime = performance.now();
+      const firstCard = carousel.querySelector(".video-card");
+      const secondCard = carousel.querySelectorAll(".video-card")[1];
 
-    function animateScroll(currentTime) {
-      const elapsed = currentTime - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      const eased = easeInOutCubic(progress);
-      carousel.scrollLeft = start + (scrollAmount * eased);
+      // ✅ 預先 clone 第 1 張放到最後（但保留原 iframe，不重新載）
+      const clone = firstCard.cloneNode(true);
+      const iframe = clone.querySelector("iframe");
+      if (iframe) {
+        const originalSrc = iframe.src;
+        iframe.src = originalSrc; // 觸發提早載入
+      }
 
-      if (progress < 1) {
-        requestAnimationFrame(animateScroll);
+      carousel.appendChild(clone); // ✅ 先插入卡片（讓它站定位）
+
+      // ✅ 現在開始滑動畫
+      carousel.classList.add("animating");
+      carousel.style.transform = `translateX(-${cardWidth}px)`;
+
+      setTimeout(() => {
+        carousel.classList.remove("animating");
+        carousel.style.transition = "none";
+        carousel.style.transform = "none";
+
+        // ❌ 不能 remove() clone，因為 clone 已是下一張卡片
+        // ✅ 應該是把最左邊那一張（原本的第一張）remove 掉
+        carousel.removeChild(firstCard);
+
+        requestAnimationFrame(() => {
+          carousel.style.transition = "";
+          isAnimating = false;
+        });
+      }, 400);
+    }
+
+    function scrollCarousel(direction) {
+      // 支援左右按鈕（目前只實作右）
+      if (direction === 1) {
+        slideOnce();
       } else {
-        // 替換 DOM 位置
-        if (direction === 1) {
-          const first = carousel.querySelector(".video-card");
-          carousel.appendChild(first);
-        } else {
-          const cards = carousel.querySelectorAll(".video-card");
-          const last = cards[cards.length - 1];
-          carousel.insertBefore(last, carousel.firstChild);
-        }
+        // 如果想支援左滑，要多一步：先將最後一張搬到前面，再從右滑入
+        if (isAnimating) return;
+        isAnimating = true;
 
-        // 補回 scrollLeft 避免跳位
-        carousel.scrollLeft -= scrollAmount;
-        isAnimating = false;
+        const cards = carousel.querySelectorAll(".video-card");
+        const last = cards[cards.length - 1];
+        carousel.insertBefore(last, cards[0]);
+
+        carousel.style.transition = "none";
+        carousel.style.transform = `translateX(-${cardWidth}px)`;
+
+        requestAnimationFrame(() => {
+          carousel.style.transition = "transform 0.4s ease";
+          carousel.style.transform = `translateX(0px)`;
+
+          setTimeout(() => {
+            carousel.style.transition = "";
+            isAnimating = false;
+          }, 400);
+        });
       }
     }
 
-    requestAnimationFrame(animateScroll);
-  }
+    function pauseAutoScroll() {
+      isHovered = true;
+      clearInterval(autoScrollTimer);
+    }
 
-  // 平滑曲線：自己選一種
-  function easeInOutCubic(t) {
-    return t < 0.5
-      ? 4 * t * t * t
-      : 1 - Math.pow(-2 * t + 2, 3) / 2;
-  }
+    function resumeAutoScroll() {
+      isHovered = false;
+      clearInterval(autoScrollTimer);
+      autoScrollTimer = setInterval(() => {
+        if (!isHovered) slideOnce();
+      }, 3000);
+    }
 
-  function pauseAutoScroll() {
-    isHovered = true;
-    clearInterval(autoScrollTimer);
-  }
+    function hoverEnter() {
+      showArrows();
+      pauseAutoScroll();
+    }
 
-  function resumeAutoScroll() {
-    isHovered = false;
-    clearInterval(autoScrollTimer);
-    autoScrollTimer = setInterval(() => {
-      if (!isHovered) scrollCarousel(1);
-    }, 3000);
-  }
+    function hoverLeave() {
+      hideArrows();
+      resumeAutoScroll();
+    }
 
-  function showArrows() {
-    document.querySelectorAll(".arrow").forEach(btn => btn.style.opacity = 1);
-  }
+    function showArrows() {
+      document.querySelectorAll(".arrow").forEach(btn => btn.style.opacity = 1);
+    }
 
-  function hideArrows() {
-    document.querySelectorAll(".arrow").forEach(btn => btn.style.opacity = 0);
-  }
+    function hideArrows() {
+      document.querySelectorAll(".arrow").forEach(btn => btn.style.opacity = 0);
+    }
 
-  function hoverEnter() {
-    showArrows();
-    pauseAutoScroll();
-  }
-
-  function hoverLeave() {
-    hideArrows();
-    resumeAutoScroll();
-  }
-
-  window.addEventListener("load", () => {
-    const iframes = document.querySelectorAll(".video-card iframe");
-    let loaded = 0;
-    iframes.forEach(iframe => {
-      iframe.onload = () => {
-        loaded++;
-        if (loaded === iframes.length) {
-          setupTrueInfiniteCarousel();
-        }
-      };
+    window.addEventListener("load", () => {
+      setupReorderCarousel(); // ✅ 一上線就啟動輪播
     });
-  });
-</script>
+
+    document.querySelectorAll('.lazy-iframe').forEach(iframe => {
+      iframe.addEventListener('load', () => {
+        iframe.style.opacity = '1';
+      });
+    });
+
+  </script>
 
 </body>
 
