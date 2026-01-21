@@ -168,36 +168,28 @@
       if (isAnimating) return;
       isAnimating = true;
 
+      const cardWidthWithGap = cardWidth; // 已有 gap 加成
       const firstCard = carousel.querySelector(".video-card");
-      const secondCard = carousel.querySelectorAll(".video-card")[1];
 
-      // ✅ 預先 clone 第 1 張放到最後（但保留原 iframe，不重新載）
-      const clone = firstCard.cloneNode(true);
-      const iframe = clone.querySelector("iframe");
-      if (iframe) {
-        const originalSrc = iframe.src;
-        iframe.src = originalSrc; // 觸發提早載入
-      }
+      // ✅ 預先 append 第一張卡片到最後（讓動畫時已在場景中）
+      carousel.appendChild(firstCard);
 
-      carousel.appendChild(clone); // ✅ 先插入卡片（讓它站定位）
+      // ✅ 立刻移動 carousel 整排到「-1 張」的位置
+      carousel.style.transition = 'none';
+      carousel.style.transform = `translateX(-${cardWidthWithGap}px)`;
 
-      // ✅ 現在開始滑動畫
-      carousel.classList.add("animating");
-      carousel.style.transform = `translateX(-${cardWidth}px)`;
+      // ✅ 強迫瀏覽器重繪（讓 transform 生效）
+      void carousel.offsetWidth;
 
+      // ✅ 開始動畫回到 0，像是把畫面拉正
+      carousel.style.transition = 'transform 0.4s ease';
+      carousel.style.transform = 'translateX(0)';
+
+      // ✅ 動畫結束後，reset 狀態
       setTimeout(() => {
-        carousel.classList.remove("animating");
-        carousel.style.transition = "none";
-        carousel.style.transform = "none";
-
-        // ❌ 不能 remove() clone，因為 clone 已是下一張卡片
-        // ✅ 應該是把最左邊那一張（原本的第一張）remove 掉
-        carousel.removeChild(firstCard);
-
-        requestAnimationFrame(() => {
-          carousel.style.transition = "";
-          isAnimating = false;
-        });
+        carousel.style.transition = 'none';
+        carousel.style.transform = 'none';
+        isAnimating = false;
       }, 400);
     }
 
