@@ -122,41 +122,43 @@
     </div>
   </footer>
 
-  <script>
-    const carousel = document.getElementById("video-carousel");
-    const gap = 24;
-    let cardWidth;
-    let autoScrollTimer;
-    let isHovered = false;
-    let isAnimating = false;
+<script>
+  const carousel = document.getElementById("video-carousel");
+  const gap = 24;
+  let cardWidth;
+  let autoScrollTimer;
+  let isHovered = false;
+  let isAnimating = false;
 
-    function setupTrueInfiniteCarousel() {
-      const cards = carousel.querySelectorAll(".video-card");
-      cardWidth = cards[0].offsetWidth + gap;
+  function setupTrueInfiniteCarousel() {
+    const cards = carousel.querySelectorAll(".video-card");
+    cardWidth = cards[0].offsetWidth + gap;
 
-      // 初始 scrollLeft 設定，預防 DOM 應變
-      carousel.scrollLeft = 0;
+    autoScrollTimer = setInterval(() => {
+      if (!isHovered) scrollCarousel(1);
+    }, 3000);
+  }
 
-      autoScrollTimer = setInterval(() => {
-        if (!isHovered) scrollCarousel(1);
-      }, 3000);
-    }
+  function scrollCarousel(direction) {
+    if (isAnimating) return;
+    isAnimating = true;
 
-    function scrollCarousel(direction) {
-      if (isAnimating) return;
-      isAnimating = true;
+    const scrollAmount = direction * cardWidth;
+    const start = carousel.scrollLeft;
+    const end = start + scrollAmount;
+    const duration = 300;
+    const startTime = performance.now();
 
-      const scrollAmount = direction * cardWidth;
-      const originalScroll = carousel.scrollLeft;
+    function animateScroll(currentTime) {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = easeInOutCubic(progress);
+      carousel.scrollLeft = start + (scrollAmount * eased);
 
-      // 動畫滑動
-      carousel.scrollTo({
-        left: originalScroll + scrollAmount,
-        behavior: 'smooth'
-      });
-
-      // 等動畫完成再換 DOM 順序（需搭配動畫時間）
-      setTimeout(() => {
+      if (progress < 1) {
+        requestAnimationFrame(animateScroll);
+      } else {
+        // 替換 DOM 位置
         if (direction === 1) {
           const first = carousel.querySelector(".video-card");
           carousel.appendChild(first);
@@ -166,57 +168,66 @@
           carousel.insertBefore(last, carousel.firstChild);
         }
 
-        // 馬上回 scrollLeft，重設位置
+        // 補回 scrollLeft 避免跳位
         carousel.scrollLeft -= scrollAmount;
         isAnimating = false;
-      }, 320); // 與 CSS 動畫時間同步
+      }
     }
 
-    function pauseAutoScroll() {
-      isHovered = true;
-      clearInterval(autoScrollTimer);
-    }
+    requestAnimationFrame(animateScroll);
+  }
 
-    function resumeAutoScroll() {
-      isHovered = false;
-      clearInterval(autoScrollTimer); // 清掉舊的
-      autoScrollTimer = setInterval(() => {
-        if (!isHovered) scrollCarousel(1);
-      }, 3000);
-    }
+  // 平滑曲線：自己選一種
+  function easeInOutCubic(t) {
+    return t < 0.5
+      ? 4 * t * t * t
+      : 1 - Math.pow(-2 * t + 2, 3) / 2;
+  }
 
-    function showArrows() {
-      document.querySelectorAll(".arrow").forEach(btn => btn.style.opacity = 1);
-    }
+  function pauseAutoScroll() {
+    isHovered = true;
+    clearInterval(autoScrollTimer);
+  }
 
-    function hideArrows() {
-      document.querySelectorAll(".arrow").forEach(btn => btn.style.opacity = 0);
-    }
+  function resumeAutoScroll() {
+    isHovered = false;
+    clearInterval(autoScrollTimer);
+    autoScrollTimer = setInterval(() => {
+      if (!isHovered) scrollCarousel(1);
+    }, 3000);
+  }
 
-    function hoverEnter() {
-      showArrows();
-      pauseAutoScroll();
-    }
+  function showArrows() {
+    document.querySelectorAll(".arrow").forEach(btn => btn.style.opacity = 1);
+  }
 
-    function hoverLeave() {
-      hideArrows();
-      resumeAutoScroll();
-    }
+  function hideArrows() {
+    document.querySelectorAll(".arrow").forEach(btn => btn.style.opacity = 0);
+  }
 
-    window.addEventListener("load", () => {
-      // 等待影片 iframe 都載入完成再初始化
-      const iframes = document.querySelectorAll(".video-card iframe");
-      let loaded = 0;
-      iframes.forEach(iframe => {
-        iframe.onload = () => {
-          loaded++;
-          if (loaded === iframes.length) {
-            setupTrueInfiniteCarousel();
-          }
-        };
-      });
+  function hoverEnter() {
+    showArrows();
+    pauseAutoScroll();
+  }
+
+  function hoverLeave() {
+    hideArrows();
+    resumeAutoScroll();
+  }
+
+  window.addEventListener("load", () => {
+    const iframes = document.querySelectorAll(".video-card iframe");
+    let loaded = 0;
+    iframes.forEach(iframe => {
+      iframe.onload = () => {
+        loaded++;
+        if (loaded === iframes.length) {
+          setupTrueInfiniteCarousel();
+        }
+      };
     });
-  </script>
+  });
+</script>
 
 </body>
 
