@@ -169,7 +169,7 @@
       carousel.addEventListener('transitionend', function handleTransitionEnd() {
         carousel.removeEventListener('transitionend', handleTransitionEnd);
         carousel.style.transition = "none";
-        const cards = carousel.querySelectorAll(".video-card");
+        const cards = Array.from(carousel.querySelectorAll(".video-card")).filter(card => !card.classList.contains("is-clone"));
 
         if (direction === 1) {
           carousel.appendChild(cards[0]);
