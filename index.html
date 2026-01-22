@@ -135,19 +135,22 @@
     let autoScrollTimer;
     let isHovered = false;
 
-    function setupCarousel() {
-      const cards = Array.from(carousel.querySelectorAll('.video-card')).filter(card => !card.classList.contains('is-clone'));
-      cardWidth = cards[0].offsetWidth + gap;
+    let initialCards = [];
 
-      // 頭尾 clone 一張（真正環狀）
-      const first = cards[0].cloneNode(true);
+    function setupCarousel() {
+      const rawCards = Array.from(carousel.querySelectorAll('.video-card'));
+
+      cardWidth = rawCards[0].offsetWidth + gap;
+
+      const first = rawCards[0].cloneNode(true);
+      const last = rawCards[rawCards.length - 1].cloneNode(true);
+
       first.classList.add('is-clone');
-      const last = cards[cards.length - 1].cloneNode(true);
       last.classList.add('is-clone');
-      carousel.insertBefore(last, cards[0]);
+
+      carousel.insertBefore(last, rawCards[0]);
       carousel.appendChild(first);
 
-      // 初始位移到「第一張實體卡片」位置（即 index=1）
       carousel.style.transform = `translateX(-${cardWidth}px)`;
 
       autoScrollTimer = setInterval(() => {
@@ -155,9 +158,21 @@
       }, 3000);
     }
 
+    let pendingMoveCard = null;
+
     function scrollCarousel(direction) {
       if (isAnimating) return;
       isAnimating = true;
+
+      const allCards = Array.from(carousel.querySelectorAll(".video-card"))
+        .filter(c => !c.classList.contains("is-clone"));
+
+      // 先決定好要搬的卡片是哪一張
+      if (direction === 1) {
+        pendingMoveCard = allCards[0]; // 頭搬到尾
+      } else {
+        pendingMoveCard = allCards[allCards.length - 1]; // 尾搬到頭
+      }
 
       const move = direction * cardWidth;
       const currentX = getTranslateX(carousel);
@@ -169,16 +184,16 @@
       carousel.addEventListener('transitionend', function handleTransitionEnd() {
         carousel.removeEventListener('transitionend', handleTransitionEnd);
         carousel.style.transition = "none";
-        const cards = Array.from(carousel.querySelectorAll(".video-card")).filter(card => !card.classList.contains("is-clone"));
 
         if (direction === 1) {
-          carousel.appendChild(cards[0]);
+          carousel.appendChild(pendingMoveCard);
         } else {
-          carousel.insertBefore(cards[cards.length - 1], cards[0]);
+          carousel.insertBefore(pendingMoveCard, carousel.firstElementChild);
         }
 
         carousel.style.transform = `translateX(-${cardWidth}px)`;
         isAnimating = false;
+        pendingMoveCard = null;
       }, { once: true });
     }
 
