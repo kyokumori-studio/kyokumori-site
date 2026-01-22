@@ -48,33 +48,43 @@
         <div class="carousel-window">
           <div class="carousel" id="video-carousel">
             <div class="video-card">
-              <div class="video-shell"
-                style="background-color: #e64c3c; display: flex; align-items: center; justify-content: center; font-size: 48px; color: white;">
-                1
+              <div class="video-shell">
+                <iframe loading="lazy" decoding="async" width="337" height="599"
+                  src="https://www.youtube.com/embed/at9pIv1SDfE" frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerpolicy="strict-origin-when-cross-origin" allowfullscreen class="lazy-iframe"></iframe>
               </div>
             </div>
             <div class="video-card">
-              <div class="video-shell"
-                style="background-color: #e79c3c; display: flex; align-items: center; justify-content: center; font-size: 48px; color: white;">
-                2
+              <div class="video-shell">
+                <iframe loading="lazy" decoding="async" width="337" height="599"
+                  src="https://www.youtube.com/embed/Z5gCOttIj9E" frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerpolicy="strict-origin-when-cross-origin" allowfullscreen class="lazy-iframe"></iframe>
               </div>
             </div>
             <div class="video-card">
-              <div class="video-shell"
-                style="background-color: #e74c3c; display: flex; align-items: center; justify-content: center; font-size: 48px; color: white;">
-                3
+              <div class="video-shell">
+                <iframe loading="lazy" decoding="async" width="337" height="599"
+                  src="https://www.youtube.com/embed/at9pIv1SDfE" frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerpolicy="strict-origin-when-cross-origin" allowfullscreen class="lazy-iframe"></iframe>
               </div>
             </div>
             <div class="video-card">
-              <div class="video-shell"
-                style="background-color: #3498db; display: flex; align-items: center; justify-content: center; font-size: 48px; color: white;">
-                4
+              <div class="video-shell">
+                <iframe loading="lazy" decoding="async" width="337" height="599"
+                  src="https://www.youtube.com/embed/Z5gCOttIj9E" frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerpolicy="strict-origin-when-cross-origin" allowfullscreen class="lazy-iframe"></iframe>
               </div>
             </div>
             <div class="video-card">
-              <div class="video-shell"
-                style="background-color: #f39c12; display: flex; align-items: center; justify-content: center; font-size: 48px; color: black;">
-                5
+              <div class="video-shell">
+                <iframe loading="lazy" decoding="async" width="337" height="599"
+                  src="https://www.youtube.com/embed/at9pIv1SDfE" frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerpolicy="strict-origin-when-cross-origin" allowfullscreen class="lazy-iframe"></iframe>
               </div>
             </div>
           </div>
@@ -135,16 +145,12 @@
     let autoScrollTimer;
     let isHovered = false;
 
-    let initialCards = [];
-
     function setupCarousel() {
       const rawCards = Array.from(carousel.querySelectorAll('.video-card'));
-
       cardWidth = rawCards[0].offsetWidth + gap;
 
       const first = rawCards[0].cloneNode(true);
       const last = rawCards[rawCards.length - 1].cloneNode(true);
-
       first.classList.add('is-clone');
       last.classList.add('is-clone');
 
@@ -158,21 +164,9 @@
       }, 3000);
     }
 
-    let pendingMoveCard = null;
-
     function scrollCarousel(direction) {
       if (isAnimating) return;
       isAnimating = true;
-
-      const allCards = Array.from(carousel.querySelectorAll(".video-card"))
-        .filter(c => !c.classList.contains("is-clone"));
-
-      // 先決定好要搬的卡片是哪一張
-      if (direction === 1) {
-        pendingMoveCard = allCards[0]; // 頭搬到尾
-      } else {
-        pendingMoveCard = allCards[allCards.length - 1]; // 尾搬到頭
-      }
 
       const move = direction * cardWidth;
       const currentX = getTranslateX(carousel);
@@ -181,19 +175,36 @@
       carousel.style.transition = "transform 0.4s ease";
       carousel.style.transform = `translateX(${newX}px)`;
 
-      carousel.addEventListener('transitionend', function handleTransitionEnd() {
-        carousel.removeEventListener('transitionend', handleTransitionEnd);
+      carousel.addEventListener("transitionend", function handleTransitionEnd() {
+        carousel.removeEventListener("transitionend", handleTransitionEnd);
         carousel.style.transition = "none";
 
+        const cards = Array.from(carousel.querySelectorAll('.video-card'));
+        const realCards = cards.filter(c => !c.classList.contains("is-clone"));
+
         if (direction === 1) {
-          carousel.appendChild(pendingMoveCard);
+          const firstReal = realCards[0];
+          carousel.appendChild(firstReal);
         } else {
-          carousel.insertBefore(pendingMoveCard, carousel.firstElementChild);
+          const lastReal = realCards[realCards.length - 1];
+          carousel.insertBefore(lastReal, carousel.firstElementChild);
         }
 
         carousel.style.transform = `translateX(-${cardWidth}px)`;
+
+        // 移除所有 clone
+        Array.from(carousel.querySelectorAll(".is-clone")).forEach(c => c.remove());
+
+        // 補上新的 clone
+        const updatedCards = Array.from(carousel.querySelectorAll('.video-card'));
+        const newFirst = updatedCards[0].cloneNode(true);
+        const newLast = updatedCards[updatedCards.length - 1].cloneNode(true);
+        newFirst.classList.add("is-clone");
+        newLast.classList.add("is-clone");
+        carousel.insertBefore(newLast, updatedCards[0]);
+        carousel.appendChild(newFirst);
+
         isAnimating = false;
-        pendingMoveCard = null;
       }, { once: true });
     }
 
@@ -236,12 +247,6 @@
 
     window.addEventListener("load", () => {
       setupCarousel();
-    });
-
-    document.querySelectorAll('.lazy-iframe').forEach(iframe => {
-      iframe.addEventListener('load', () => {
-        iframe.style.opacity = '1';
-      });
     });
   </script>
 </body>
