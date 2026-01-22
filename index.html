@@ -248,6 +248,13 @@
     window.addEventListener("load", () => {
       setupCarousel();
     });
+
+document.querySelectorAll('.lazy-iframe').forEach(iframe => {
+  iframe.addEventListener('load', () => {
+    iframe.style.opacity = '1';
+  });
+});
+
   </script>
 </body>
 
