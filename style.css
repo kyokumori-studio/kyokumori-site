@@ -579,39 +579,44 @@ footer {
   }
   
   .carousel-wrapper {
-    gap: 12px;
+    gap: 0;
+    flex-direction: column;
   }
   
-  /* 手機上隱藏箭頭，改用滑動 */
+  /* 手機上隱藏箭頭 */
   .arrow {
     display: none;
   }
   
   .carousel-window {
+    width: 100%;
     max-width: 100%;
     overflow-x: auto;
     overflow-y: hidden;
     -webkit-overflow-scrolling: touch;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none; /* Firefox */
+    padding: 0 20px;
   }
   
+  /* 隱藏滾動條 */
   .carousel-window::-webkit-scrollbar {
-    display: none; /* Chrome, Safari */
+    display: none;
   }
   
   .carousel {
     gap: 16px;
+    padding: 4px 0;
   }
   
   .video-card {
-    width: 260px;
-    scroll-snap-align: center;
+    width: 85vw;
+    max-width: 320px;
+    min-width: 260px;
   }
   
-  .video-card iframe,
-  .video-placeholder {
-    height: 420px;
+  .video-card iframe {
+    height: calc((85vw) * 1.6);
+    max-height: 500px;
+    min-height: 400px;
   }
   
   /* 指示點間距調整 */
