@@ -50,7 +50,7 @@ body {
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 32px;
+  padding: 0 48px;
 }
 
 /* === Header 導覽列 === */
@@ -58,7 +58,7 @@ header {
   background: linear-gradient(180deg, var(--charcoal) 0%, rgba(26, 26, 26, 0.95) 100%);
   backdrop-filter: blur(12px);
   color: var(--fog-white);
-  padding: 20px 0;
+  padding: 24px 0;
   position: sticky;
   top: 0;
   z-index: 100;
@@ -74,10 +74,10 @@ header {
 
 .nav nav a {
   color: var(--fog-white);
-  margin-left: 28px;
+  margin-left: 32px;
   text-decoration: none;
-  font-weight: 500;
-  font-size: 15px;
+  font-weight: 400;
+  font-size: 14px;
   letter-spacing: 0.5px;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
@@ -118,8 +118,8 @@ header {
 }
 
 .logo-img {
-  width: 44px;
-  height: 44px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid rgba(232, 232, 232, 0.15);
@@ -135,20 +135,20 @@ header {
 .logo-text-group {
   display: flex;
   align-items: baseline;
-  gap: 10px;
+  gap: 8px;
   white-space: nowrap;
 }
 
 .logo-text-zh {
-  font-size: 22px;
-  font-weight: 700;
-  letter-spacing: 1px;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
 }
 
 .logo-text-en {
-  font-size: 13px;
+  font-size: 12px;
   color: var(--mist-gray);
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: 0.5px;
   transition: color 0.4s ease;
 }
@@ -164,7 +164,7 @@ header {
     var(--smoke-gray) 50%, 
     var(--charcoal) 100%);
   color: var(--fog-white);
-  padding: 128px 0;
+  padding: 160px 0;
   text-align: center;
   position: relative;
   overflow: hidden;
@@ -187,66 +187,67 @@ header {
 }
 
 .hero h1 {
-  font-size: 48px;
-  font-weight: 700;
-  margin-bottom: 24px;
-  letter-spacing: 2px;
+  font-size: 38px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  letter-spacing: 1.5px;
   position: relative;
   z-index: 1;
   color: var(--fog-white);
 }
 
 .hero p {
-  font-size: 18px;
-  font-weight: 400;
-  letter-spacing: 1px;
+  font-size: 16px;
+  font-weight: 300;
+  letter-spacing: 0.5px;
   color: #b8b8b8;
   position: relative;
   z-index: 1;
-  max-width: 700px;
+  max-width: 600px;
   margin: 0 auto;
-  line-height: 1.8;
+  line-height: 1.9;
 }
 
 /* === 素材庫介紹區 === */
 .resources-intro {
   background: var(--ink-black);
   text-align: center;
-  padding: 96px 0;
+  padding: 120px 0;
   position: relative;
 }
 
 .resources-intro h2 {
-  font-size: 36px;
-  font-weight: 700;
+  font-size: 28px;
+  font-weight: 600;
   margin-bottom: 16px;
-  letter-spacing: 1.5px;
+  letter-spacing: 1px;
   color: var(--fog-white);
 }
 
 .resources-intro p {
-  font-size: 17px;
+  font-size: 15px;
+  font-weight: 300;
   color: var(--mist-gray);
-  letter-spacing: 0.5px;
+  letter-spacing: 0.3px;
 }
 
 /* === 素材入口卡片區 === */
 .resource-portal {
   background: var(--charcoal);
-  padding: 80px 0;
+  padding: 100px 0 120px;
 }
 
 .cards {
   display: flex;
-  gap: 32px;
+  gap: 40px;
   flex-wrap: wrap;
   justify-content: center;
 }
 
 .card {
-  width: 320px;
+  width: 280px;
   background: linear-gradient(135deg, var(--smoke-gray) 0%, var(--charcoal) 100%);
-  border-radius: 12px;
+  border-radius: 10px;
   text-align: center;
   text-decoration: none;
   color: var(--fog-white);
@@ -274,16 +275,16 @@ header {
 }
 
 .card:hover {
-  transform: translateY(-8px);
+  transform: translateY(-6px);
   box-shadow: var(--ink-glow);
   border-color: rgba(201, 184, 150, 0.3);
 }
 
 .card img {
   width: 100%;
-  height: 180px;
+  height: 160px;
   object-fit: cover;
-  border-radius: 12px 12px 0 0;
+  border-radius: 10px 10px 0 0;
   transition: all 0.5s ease;
   filter: grayscale(20%);
 }
@@ -294,15 +295,16 @@ header {
 }
 
 .card h3 {
-  margin: 20px 0 10px;
-  font-size: 20px;
-  font-weight: 700;
-  letter-spacing: 1px;
+  margin: 18px 0 8px;
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
 }
 
 .card p {
-  margin-bottom: 20px;
-  font-size: 15px;
+  margin-bottom: 18px;
+  font-size: 13px;
+  font-weight: 300;
   color: var(--mist-gray);
   padding: 0 16px;
 }
@@ -311,7 +313,7 @@ header {
 footer {
   background: var(--charcoal);
   color: var(--mist-gray);
-  padding: 64px 0;
+  padding: 80px 0;
   border-top: 1px solid rgba(232, 232, 232, 0.08);
 }
 
@@ -319,14 +321,15 @@ footer {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 32px;
+  gap: 40px;
 }
 
 .footer-left p,
 .footer-right p {
-  margin-bottom: 8px;
-  line-height: 1.8;
-  font-size: 14px;
+  margin-bottom: 10px;
+  line-height: 2;
+  font-size: 13px;
+  font-weight: 300;
   letter-spacing: 0.3px;
 }
 
@@ -347,16 +350,16 @@ footer {
 .featured-carousel {
   background: var(--ink-black);
   color: var(--fog-white);
-  padding: 96px 0;
+  padding: 120px 0;
   position: relative;
 }
 
 .section-title {
   text-align: center;
-  font-size: 36px;
-  font-weight: 700;
-  margin-bottom: 48px;
-  letter-spacing: 1.5px;
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 60px;
+  letter-spacing: 1px;
 }
 
 .carousel-wrapper {
@@ -364,7 +367,7 @@ footer {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 20px;
+  gap: 24px;
   max-width: 100%;
   overflow: hidden;
 }
@@ -373,10 +376,10 @@ footer {
 .arrow {
   background: linear-gradient(135deg, var(--smoke-gray) 0%, var(--mist-gray) 100%);
   color: var(--fog-white);
-  font-size: 28px;
+  font-size: 20px;
   border: 1px solid rgba(232, 232, 232, 0.12);
-  padding: 14px 18px;
-  border-radius: 8px;
+  padding: 10px 14px;
+  border-radius: 6px;
   cursor: pointer;
   opacity: 0;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -390,19 +393,19 @@ footer {
 
 .arrow:hover {
   background: linear-gradient(135deg, var(--mist-gray) 0%, var(--ink-blue) 100%);
-  transform: scale(1.1);
+  transform: scale(1.08);
   box-shadow: var(--ink-glow);
 }
 
 .carousel-window {
   width: 100%;
-  max-width: 1008px;
+  max-width: 900px;
   overflow: hidden;
 }
 
 .carousel {
   display: flex;
-  gap: 24px;
+  gap: 32px;
   overflow: hidden;
   will-change: transform;
   min-width: max-content;
@@ -414,9 +417,9 @@ footer {
 
 /* 影片卡片 */
 .video-card {
-  width: 320px;
+  width: 280px;
   flex: 0 0 auto;
-  border-radius: 12px;
+  border-radius: 10px;
   overflow: hidden;
   flex-shrink: 0;
   box-shadow: var(--ink-spread);
@@ -425,7 +428,7 @@ footer {
 }
 
 .video-card:hover {
-  transform: translateY(-6px);
+  transform: translateY(-4px);
   box-shadow: var(--ink-glow);
   border-color: rgba(201, 184, 150, 0.2);
 }
@@ -433,7 +436,7 @@ footer {
 .video-shell {
   position: relative;
   width: 100%;
-  height: 530px;
+  height: 460px;
   background: var(--charcoal);
   overflow: hidden;
 }
@@ -445,7 +448,8 @@ footer {
   left: 50%;
   transform: translate(-50%, -50%);
   color: var(--mist-gray);
-  font-size: 14px;
+  font-size: 12px;
+  font-weight: 300;
   z-index: 1;
 }
 
@@ -471,19 +475,31 @@ footer {
 
 @media (max-width: 768px) {
   .container {
-    padding: 0 20px;
+    padding: 0 24px;
+  }
+  
+  .hero {
+    padding: 100px 0;
   }
   
   .hero h1 {
-    font-size: 32px;
+    font-size: 28px;
   }
   
   .hero p {
-    font-size: 16px;
+    font-size: 14px;
   }
   
   .section-title {
-    font-size: 28px;
+    font-size: 24px;
+  }
+  
+  .resources-intro {
+    padding: 80px 0;
+  }
+  
+  .resource-portal {
+    padding: 60px 0 80px;
   }
   
   .footer-content {
