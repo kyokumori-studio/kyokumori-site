@@ -6,69 +6,58 @@
   <meta charset="utf-8" /> <!-- 設定編碼為 UTF-8,支援中文 -->
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
   <title>曲守工作室 Kyokumori Studio</title> <!-- 標題列顯示的名稱 -->
-  <link href="style.css?v=2" rel="stylesheet" /> <!-- 外部 CSS 樣式表連結 -->
+  <link href="style.css?v=3" rel="stylesheet" /> <!-- 外部 CSS 樣式表連結 -->
 </head>
 
 <body>
   <!-- 網站上方導覽列(Header) -->
   <header>
     <div class="container nav">
-      <!-- ✅ 改為乾淨對齊的 logo 標區:圖片 + 中文 + 英文 -->
       <a class="logo-link" href="/">
-        <!-- 圓形 logo 圖片 -->
         <img alt="Logo" class="logo-img" src="logo.png" />
-        <!-- 文字組合:中文主標＋英文副標(同行) -->
         <div class="logo-text-group">
           <span class="logo-text-zh">曲守工作室</span>
           <span class="logo-text-en">Kyokumori Studio</span>
         </div>
       </a>
-      <!-- 導覽列選單 -->
       <nav>
         <a href="#">首頁</a>
-        <a href="#resources">素材庫</a> <!-- 錨點連到下方素材庫區塊 -->
+        <a href="#resources">素材庫</a>
         <a href="#">關於我們</a>
         <a href="#">聯絡我們</a>
       </nav>
     </div>
   </header>
-  <!-- Hero 區(首頁第一印象區塊) -->
-  <!-- 如需加入背景圖片，在 <section class="hero"> 加上 style="background-image: url('your-image.jpg');" -->
+  
   <section class="hero" style="background-image: url('background.png');">
     <div class="container">
       <h1>曲守工作室 Kyokumori Studio</h1>
       <p>創作 × 技術 × 即時互動,構築角色與觀眾的連結橋梁</p>
     </div>
   </section>
-  <!--作品集-->
+  
   <section class="featured-carousel">
     <div class="container">
       <h2 class="section-title">推薦作品</h2>
       <div class="carousel-wrapper">
         <button class="arrow left" onclick="manualScroll(-1)">←</button>
-        <div class="carousel-window">
+        <div class="carousel-window" id="carousel-window">
           <div class="carousel" id="video-carousel">
-            <!-- 影片 1 -->
             <div class="video-card">
               <iframe width="337" height="599"
                 src="https://www.youtube.com/embed/at9pIv1SDfE"
-                title="【安露精華】穿越了兩次，實在是……太腳滑了。｜安露 • 書拉密 あんず • シュラム｜Vtuber精華｜中文字幕｜曲守精華所｜#shorts #short  #vtuber #vtuber精華"
+                title="【安露精華】穿越了兩次，實在是……太腳滑了。"
                 frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerpolicy="strict-origin-when-cross-origin"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowfullscreen></iframe>
             </div>
-            <!-- 影片 2 -->
             <div class="video-card">
               <iframe width="337" height="599"
-                src="https://www.youtube.com/embed/at9pIv1SDfE"
-                title="【安露精華】穿越了兩次，實在是……太腳滑了。｜安露 • 書拉密 あんず • シュラム｜Vtuber精華｜中文字幕｜曲守精華所｜#shorts #short  #vtuber #vtuber精華"
+                src="https://www.youtube.com/embed/Z5gCOttIj9E"
                 frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerpolicy="strict-origin-when-cross-origin"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowfullscreen></iframe>
             </div>
-            <!-- 影片 3 -->
             <div class="video-card">
               <iframe width="280" height="460"
                 src="https://www.youtube.com/embed/at9pIv1SDfE"
@@ -76,7 +65,6 @@
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowfullscreen></iframe>
             </div>
-            <!-- 影片 4 -->
             <div class="video-card">
               <iframe width="280" height="460"
                 src="https://www.youtube.com/embed/Z5gCOttIj9E"
@@ -84,7 +72,6 @@
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowfullscreen></iframe>
             </div>
-            <!-- 影片 5 -->
             <div class="video-card">
               <iframe width="280" height="460"
                 src="https://www.youtube.com/embed/at9pIv1SDfE"
@@ -96,38 +83,34 @@
         </div>
         <button class="arrow right" onclick="manualScroll(1)">→</button>
       </div>
-      <!-- 指示點 -->
       <div class="carousel-dots" id="carousel-dots"></div>
     </div>
   </section>
-  <!-- 免費素材庫介紹區 -->
+  
   <section class="resources-intro" id="resources">
     <div class="container">
       <h2>免費素材庫 Free Resources</h2>
       <p>提供免費音樂、音效與視覺素材,幫助你輕鬆創作!</p>
     </div>
   </section>
-  <!-- 三分類入口卡片區 -->
+  
   <section class="resource-portal">
     <div class="container cards">
-      <!-- 音樂素材卡片 -->
       <a class="card" href="#music">
         <h3>音樂素材</h3>
         <p>免費 BGM 與音效下載</p>
       </a>
-      <!-- 插圖素材卡片 -->
       <a class="card" href="#images">
         <h3>插圖素材</h3>
         <p>邊框、裝飾、背景圖免費使用</p>
       </a>
-      <!-- 模板素材卡片 -->
       <a class="card" href="#templates">
         <h3>模板素材</h3>
         <p>Shorts、字幕、封面排版模板包</p>
       </a>
     </div>
   </section>
-  <!-- 頁尾區塊(Footer) -->
+  
   <footer>
     <div class="container footer-content">
       <div class="footer-left">
@@ -141,33 +124,37 @@
       </div>
     </div>
   </footer>
+  
   <script>
-    // ========================================
-    // 🎞️ 無限輪播系統 - 含指示點
-    // ========================================
-    
     const carousel = document.getElementById("video-carousel");
+    const carouselWindow = document.getElementById("carousel-window");
     const dotsContainer = document.getElementById("carousel-dots");
     const cards = Array.from(carousel.querySelectorAll('.video-card'));
-    const totalCards = cards.length; // 5 支影片
-    const cardWidth = 280 + 32; // 卡片寬度 + gap
+    const totalCards = cards.length;
+    const cardWidth = 280 + 32;
     
     let currentIndex = 0;
     let autoScrollTimer;
     let isHovered = false;
+    let isMobile = window.innerWidth <= 768;
     
-    // 生成指示點
     function createDots() {
       for (let i = 0; i < totalCards; i++) {
         const dot = document.createElement('div');
         dot.className = 'carousel-dot';
         if (i === 0) dot.classList.add('active');
-        dot.addEventListener('click', () => jumpToSlide(i));
+        
+        if (isMobile) {
+          dot.addEventListener('click', () => {
+            cards[i].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+          });
+        } else {
+          dot.addEventListener('click', () => jumpToSlide(i));
+        }
         dotsContainer.appendChild(dot);
       }
     }
     
-    // 更新指示點狀態
     function updateDots() {
       const dots = dotsContainer.querySelectorAll('.carousel-dot');
       dots.forEach((dot, index) => {
@@ -175,7 +162,22 @@
       });
     }
     
-    // 跳到指定影片
+    function setupMobileScroll() {
+      let scrollTimeout;
+      carouselWindow.addEventListener('scroll', () => {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+          const scrollLeft = carouselWindow.scrollLeft;
+          const cardWidthMobile = window.innerWidth;
+          const newIndex = Math.round(scrollLeft / cardWidthMobile);
+          if (newIndex !== currentIndex && newIndex >= 0 && newIndex < totalCards) {
+            currentIndex = newIndex;
+            updateDots();
+          }
+        }, 100);
+      });
+    }
+    
     function jumpToSlide(index) {
       clearInterval(autoScrollTimer);
       currentIndex = index;
@@ -185,37 +187,18 @@
       startAutoScroll();
     }
     
-    // 複製前後各 5 張做無縫循環
     function setupInfiniteLoop() {
-      // 複製所有卡片到後面
-      cards.forEach(card => {
-        const clone = card.cloneNode(true);
-        carousel.appendChild(clone);
-      });
-      
-      // 複製所有卡片到前面
-      cards.slice().reverse().forEach(card => {
-        const clone = card.cloneNode(true);
-        carousel.insertBefore(clone, carousel.firstChild);
-      });
-      
-      // 設定初始位置(跳到中間的真實區段)
+      cards.forEach(card => carousel.appendChild(card.cloneNode(true)));
+      cards.slice().reverse().forEach(card => carousel.insertBefore(card.cloneNode(true), carousel.firstChild));
       carousel.style.transform = `translateX(-${totalCards * cardWidth}px)`;
       currentIndex = 0;
-      
-      // 生成指示點
-      createDots();
     }
     
-    // 自動滾動
     function autoScroll() {
       if (isHovered) return;
-      
       currentIndex++;
       carousel.style.transition = 'transform 0.5s ease';
       carousel.style.transform = `translateX(-${(totalCards + currentIndex) * cardWidth}px)`;
-      
-      // 如果滾到複製區的尾端,瞬間跳回真實區的開頭
       if (currentIndex >= totalCards) {
         setTimeout(() => {
           carousel.style.transition = 'none';
@@ -228,15 +211,12 @@
       }
     }
     
-    // 手動滾動
     function manualScroll(direction) {
+      if (isMobile) return;
       clearInterval(autoScrollTimer);
-      
       currentIndex += direction;
       carousel.style.transition = 'transform 0.5s ease';
       carousel.style.transform = `translateX(-${(totalCards + currentIndex) * cardWidth}px)`;
-      
-      // 邊界處理
       setTimeout(() => {
         if (currentIndex >= totalCards) {
           carousel.style.transition = 'none';
@@ -249,41 +229,41 @@
         }
         updateDots();
       }, 500);
-      
       updateDots();
-      
-      // 重啟自動滾動
       startAutoScroll();
     }
     
-    // 啟動自動滾動
     function startAutoScroll() {
       clearInterval(autoScrollTimer);
-      autoScrollTimer = setInterval(autoScroll, 3000); // 每 3 秒
+      autoScrollTimer = setInterval(autoScroll, 3000);
     }
     
-    // Hover 控制
-    carousel.parentElement.addEventListener('mouseenter', () => {
-      isHovered = true;
-      document.querySelectorAll('.arrow').forEach(btn => btn.style.opacity = 1);
-    });
+    if (!isMobile) {
+      carousel.parentElement.addEventListener('mouseenter', () => {
+        isHovered = true;
+        document.querySelectorAll('.arrow').forEach(btn => btn.style.opacity = 1);
+      });
+      carousel.parentElement.addEventListener('mouseleave', () => {
+        isHovered = false;
+        document.querySelectorAll('.arrow').forEach(btn => btn.style.opacity = 0);
+      });
+    }
     
-    carousel.parentElement.addEventListener('mouseleave', () => {
-      isHovered = false;
-      document.querySelectorAll('.arrow').forEach(btn => btn.style.opacity = 0);
-    });
-    
-    // 初始化
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', () => {
+    function init() {
+      createDots();
+      if (isMobile) {
+        setupMobileScroll();
+      } else {
         setupInfiniteLoop();
         startAutoScroll();
-      });
+      }
+    }
+    
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
     } else {
-      setupInfiniteLoop();
-      startAutoScroll();
+      init();
     }
   </script>
 </body>
-
 </html>
