@@ -49,7 +49,7 @@
           <div class="carousel" id="video-carousel">
             <div class="video-card">
               <div class="video-shell">
-                <iframe loading="lazy" width="337" height="599"
+                <iframe width="337" height="599"
                   src="https://www.youtube.com/embed/at9pIv1SDfE" frameborder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                   referrerpolicy="strict-origin-when-cross-origin" allowfullscreen class="lazy-iframe"></iframe>
@@ -57,7 +57,7 @@
             </div>
             <div class="video-card">
               <div class="video-shell">
-                <iframe loading="lazy" width="337" height="599"
+                <iframe width="337" height="599"
                   src="https://www.youtube.com/embed/Z5gCOttIj9E" frameborder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                   referrerpolicy="strict-origin-when-cross-origin" allowfullscreen class="lazy-iframe"></iframe>
@@ -65,7 +65,7 @@
             </div>
             <div class="video-card">
               <div class="video-shell">
-                <iframe loading="lazy" width="337" height="599"
+                <iframe width="337" height="599"
                   src="https://www.youtube.com/embed/at9pIv1SDfE" frameborder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                   referrerpolicy="strict-origin-when-cross-origin" allowfullscreen class="lazy-iframe"></iframe>
@@ -73,7 +73,7 @@
             </div>
             <div class="video-card">
               <div class="video-shell">
-                <iframe loading="lazy" width="337" height="599"
+                <iframe width="337" height="599"
                   src="https://www.youtube.com/embed/Z5gCOttIj9E" frameborder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                   referrerpolicy="strict-origin-when-cross-origin" allowfullscreen class="lazy-iframe"></iframe>
@@ -81,7 +81,7 @@
             </div>
             <div class="video-card">
               <div class="video-shell">
-                <iframe loading="lazy" width="337" height="599"
+                <iframe width="337" height="599"
                   src="https://www.youtube.com/embed/at9pIv1SDfE" frameborder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                   referrerpolicy="strict-origin-when-cross-origin" allowfullscreen class="lazy-iframe"></iframe>
@@ -259,28 +259,13 @@
       document.querySelectorAll(".arrow").forEach(btn => btn.style.opacity = 0);
     }
 
-    // 優化影片載入
-    function initLazyIframes() {
-      const iframes = document.querySelectorAll('.lazy-iframe');
-      iframes.forEach(iframe => {
-        iframe.addEventListener('load', function() {
-          this.classList.add('loaded');
-          // 移除載入提示
-          const shell = this.closest('.video-shell');
-          if (shell) shell.style.setProperty('--loading', 'none');
-        });
-      });
-    }
-
     // 頁面載入完成後初始化
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', () => {
         setupCarousel();
-        initLazyIframes();
       });
     } else {
       setupCarousel();
-      initLazyIframes();
     }
 
   </script>
