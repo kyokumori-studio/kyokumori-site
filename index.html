@@ -44,54 +44,56 @@
   <section class="featured-carousel">
     <div class="container">
       <h2 class="section-title">推薦作品</h2>
-      <div class="carousel-wrapper" onmouseenter="hoverEnter()" onmouseleave="hoverLeave()">
-        <button class="arrow left" onclick="scrollCarousel(-1)">←</button>
+      <div class="carousel-wrapper">
+        <button class="arrow left" onclick="manualScroll(-1)">←</button>
         <div class="carousel-window">
           <div class="carousel" id="video-carousel">
+            <!-- 影片 1 -->
             <div class="video-card">
-              <div class="video-shell">
-                <iframe width="337" height="599"
-                  src="https://www.youtube.com/embed/at9pIv1SDfE" frameborder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  referrerpolicy="strict-origin-when-cross-origin" allowfullscreen class="lazy-iframe"></iframe>
-              </div>
+              <iframe width="280" height="460"
+                src="https://www.youtube.com/embed/at9pIv1SDfE"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
             </div>
+            <!-- 影片 2 -->
             <div class="video-card">
-              <div class="video-shell">
-                <iframe width="337" height="599"
-                  src="https://www.youtube.com/embed/Z5gCOttIj9E" frameborder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  referrerpolicy="strict-origin-when-cross-origin" allowfullscreen class="lazy-iframe"></iframe>
-              </div>
+              <iframe width="280" height="460"
+                src="https://www.youtube.com/embed/Z5gCOttIj9E"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
             </div>
+            <!-- 影片 3 -->
             <div class="video-card">
-              <div class="video-shell">
-                <iframe width="337" height="599"
-                  src="https://www.youtube.com/embed/at9pIv1SDfE" frameborder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  referrerpolicy="strict-origin-when-cross-origin" allowfullscreen class="lazy-iframe"></iframe>
-              </div>
+              <iframe width="280" height="460"
+                src="https://www.youtube.com/embed/at9pIv1SDfE"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
             </div>
+            <!-- 影片 4 -->
             <div class="video-card">
-              <div class="video-shell">
-                <iframe width="337" height="599"
-                  src="https://www.youtube.com/embed/Z5gCOttIj9E" frameborder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  referrerpolicy="strict-origin-when-cross-origin" allowfullscreen class="lazy-iframe"></iframe>
-              </div>
+              <iframe width="280" height="460"
+                src="https://www.youtube.com/embed/Z5gCOttIj9E"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
             </div>
+            <!-- 影片 5 -->
             <div class="video-card">
-              <div class="video-shell">
-                <iframe width="337" height="599"
-                  src="https://www.youtube.com/embed/at9pIv1SDfE" frameborder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  referrerpolicy="strict-origin-when-cross-origin" allowfullscreen class="lazy-iframe"></iframe>
-              </div>
+              <iframe width="280" height="460"
+                src="https://www.youtube.com/embed/at9pIv1SDfE"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
             </div>
           </div>
         </div>
-        <button class="arrow right" onclick="scrollCarousel(1)">→</button>
+        <button class="arrow right" onclick="manualScroll(1)">→</button>
       </div>
+      <!-- 指示點 -->
+      <div class="carousel-dots" id="carousel-dots"></div>
     </div>
   </section>
   <!-- 免費素材庫介紹區 -->
@@ -140,135 +142,146 @@
   </footer>
   <script>
     // ========================================
-    // 🎞️ 輪播系統優化版
+    // 🎞️ 無限輪播系統 - 含指示點
     // ========================================
     
     const carousel = document.getElementById("video-carousel");
-    const gap = 32;
-    let cardWidth;
-    let isAnimating = false;
+    const dotsContainer = document.getElementById("carousel-dots");
+    const cards = Array.from(carousel.querySelectorAll('.video-card'));
+    const totalCards = cards.length; // 5 支影片
+    const cardWidth = 280 + 32; // 卡片寬度 + gap
+    
+    let currentIndex = 0;
     let autoScrollTimer;
     let isHovered = false;
-    let isInitialized = false;
-
-    // 延遲初始化,等 DOM 完全載入後再執行
-    function setupCarousel() {
-      const rawCards = Array.from(carousel.querySelectorAll('.video-card'));
-      if (rawCards.length === 0) return;
-      
-      cardWidth = rawCards[0].offsetWidth + gap;
-
-      // 複製首尾卡片實現無縫輪播
-      const first = rawCards[0].cloneNode(true);
-      const last = rawCards[rawCards.length - 1].cloneNode(true);
-      first.classList.add('is-clone');
-      last.classList.add('is-clone');
-
-      carousel.insertBefore(last, rawCards[0]);
-      carousel.appendChild(first);
-
-      // 設定初始位置
-      carousel.style.transform = `translateX(-${cardWidth}px)`;
-      isInitialized = true;
-
-      // 啟動自動輪播
+    
+    // 生成指示點
+    function createDots() {
+      for (let i = 0; i < totalCards; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'carousel-dot';
+        if (i === 0) dot.classList.add('active');
+        dot.addEventListener('click', () => jumpToSlide(i));
+        dotsContainer.appendChild(dot);
+      }
+    }
+    
+    // 更新指示點狀態
+    function updateDots() {
+      const dots = dotsContainer.querySelectorAll('.carousel-dot');
+      dots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === currentIndex);
+      });
+    }
+    
+    // 跳到指定影片
+    function jumpToSlide(index) {
+      clearInterval(autoScrollTimer);
+      currentIndex = index;
+      carousel.style.transition = 'transform 0.5s ease';
+      carousel.style.transform = `translateX(-${(totalCards + currentIndex) * cardWidth}px)`;
+      updateDots();
       startAutoScroll();
     }
-
-    function scrollCarousel(direction) {
-      if (isAnimating || !isInitialized) return;
-      isAnimating = true;
-
-      const move = direction * cardWidth;
-      const currentX = getTranslateX(carousel);
-      const newX = currentX - move;
-
-      carousel.style.transition = "transform 0.4s ease";
-      carousel.style.transform = `translateX(${newX}px)`;
-
-      carousel.addEventListener("transitionend", function handleTransitionEnd() {
-        carousel.removeEventListener("transitionend", handleTransitionEnd);
-        carousel.style.transition = "none";
-
-        const cards = Array.from(carousel.querySelectorAll('.video-card'));
-        const realCards = cards.filter(c => !c.classList.contains("is-clone"));
-
-        if (direction === 1) {
-          const firstReal = realCards[0];
-          carousel.appendChild(firstReal);
-        } else {
-          const lastReal = realCards[realCards.length - 1];
-          carousel.insertBefore(lastReal, carousel.firstElementChild);
+    
+    // 複製前後各 5 張做無縫循環
+    function setupInfiniteLoop() {
+      // 複製所有卡片到後面
+      cards.forEach(card => {
+        const clone = card.cloneNode(true);
+        carousel.appendChild(clone);
+      });
+      
+      // 複製所有卡片到前面
+      cards.slice().reverse().forEach(card => {
+        const clone = card.cloneNode(true);
+        carousel.insertBefore(clone, carousel.firstChild);
+      });
+      
+      // 設定初始位置(跳到中間的真實區段)
+      carousel.style.transform = `translateX(-${totalCards * cardWidth}px)`;
+      currentIndex = 0;
+      
+      // 生成指示點
+      createDots();
+    }
+    
+    // 自動滾動
+    function autoScroll() {
+      if (isHovered) return;
+      
+      currentIndex++;
+      carousel.style.transition = 'transform 0.5s ease';
+      carousel.style.transform = `translateX(-${(totalCards + currentIndex) * cardWidth}px)`;
+      
+      // 如果滾到複製區的尾端,瞬間跳回真實區的開頭
+      if (currentIndex >= totalCards) {
+        setTimeout(() => {
+          carousel.style.transition = 'none';
+          currentIndex = 0;
+          carousel.style.transform = `translateX(-${totalCards * cardWidth}px)`;
+          updateDots();
+        }, 500);
+      } else {
+        updateDots();
+      }
+    }
+    
+    // 手動滾動
+    function manualScroll(direction) {
+      clearInterval(autoScrollTimer);
+      
+      currentIndex += direction;
+      carousel.style.transition = 'transform 0.5s ease';
+      carousel.style.transform = `translateX(-${(totalCards + currentIndex) * cardWidth}px)`;
+      
+      // 邊界處理
+      setTimeout(() => {
+        if (currentIndex >= totalCards) {
+          carousel.style.transition = 'none';
+          currentIndex = 0;
+          carousel.style.transform = `translateX(-${totalCards * cardWidth}px)`;
+        } else if (currentIndex < 0) {
+          carousel.style.transition = 'none';
+          currentIndex = totalCards - 1;
+          carousel.style.transform = `translateX(-${(totalCards + currentIndex) * cardWidth}px)`;
         }
-
-        carousel.style.transform = `translateX(-${cardWidth}px)`;
-
-        // 移除舊 clone
-        Array.from(carousel.querySelectorAll(".is-clone")).forEach(c => c.remove());
-
-        // 補上新 clone
-        const updatedCards = Array.from(carousel.querySelectorAll('.video-card'));
-        const newFirst = updatedCards[0].cloneNode(true);
-        const newLast = updatedCards[updatedCards.length - 1].cloneNode(true);
-        newFirst.classList.add("is-clone");
-        newLast.classList.add("is-clone");
-        carousel.insertBefore(newLast, updatedCards[0]);
-        carousel.appendChild(newFirst);
-
-        isAnimating = false;
-      }, { once: true });
+        updateDots();
+      }, 500);
+      
+      updateDots();
+      
+      // 重啟自動滾動
+      startAutoScroll();
     }
-
-    function getTranslateX(element) {
-      const style = window.getComputedStyle(element);
-      const matrix = new WebKitCSSMatrix(style.transform);
-      return matrix.m41;
-    }
-
+    
+    // 啟動自動滾動
     function startAutoScroll() {
       clearInterval(autoScrollTimer);
-      autoScrollTimer = setInterval(() => {
-        if (!isHovered) scrollCarousel(1);
-      }, 5000);
+      autoScrollTimer = setInterval(autoScroll, 3000); // 每 3 秒
     }
-
-    function pauseAutoScroll() {
+    
+    // Hover 控制
+    carousel.parentElement.addEventListener('mouseenter', () => {
       isHovered = true;
-      clearInterval(autoScrollTimer);
-    }
-
-    function resumeAutoScroll() {
+      document.querySelectorAll('.arrow').forEach(btn => btn.style.opacity = 1);
+    });
+    
+    carousel.parentElement.addEventListener('mouseleave', () => {
       isHovered = false;
-      startAutoScroll();
-    }
-
-    function hoverEnter() {
-      showArrows();
-      pauseAutoScroll();
-    }
-
-    function hoverLeave() {
-      hideArrows();
-      resumeAutoScroll();
-    }
-
-    function showArrows() {
-      document.querySelectorAll(".arrow").forEach(btn => btn.style.opacity = 1);
-    }
-
-    function hideArrows() {
-      document.querySelectorAll(".arrow").forEach(btn => btn.style.opacity = 0);
-    }
-
-    // 頁面載入完成後初始化
+      document.querySelectorAll('.arrow').forEach(btn => btn.style.opacity = 0);
+    });
+    
+    // 初始化
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', () => {
-        setupCarousel();
+        setupInfiniteLoop();
+        startAutoScroll();
       });
     } else {
-      setupCarousel();
+      setupInfiniteLoop();
+      startAutoScroll();
     }
-
   </script>
 </body>
 

@@ -452,14 +452,7 @@ footer {
   box-shadow: var(--card-shadow);
   border: 1px solid rgba(0, 0, 0, 0.08);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  opacity: 0;
-  transform: translateY(20px);
   background: #ffffff;
-}
-
-.video-card.loaded {
-  opacity: 1;
-  transform: translateY(0);
 }
 
 .video-card:hover {
@@ -468,24 +461,41 @@ footer {
   border-color: rgba(201, 184, 150, 0.3);
 }
 
-.video-shell {
-  position: relative;
+.video-card iframe {
   width: 100%;
   height: 460px;
-  background: #000000;
-  overflow: hidden;
-}
+  display: block;
+  border: none;
 }
 
-.lazy-iframe {
-  width: 100%;
-  height: 100%;
-  opacity: 1;
-  border: none;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 2;
+/* === 輪播指示點 === */
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+.carousel-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.carousel-dot:hover {
+  background: rgba(0, 0, 0, 0.3);
+  transform: scale(1.2);
+}
+
+.carousel-dot.active {
+  background: var(--ink-blue);
+  border-color: var(--ink-blue);
+  width: 24px;
+  border-radius: 4px;
 }
 
 /* ========================================
