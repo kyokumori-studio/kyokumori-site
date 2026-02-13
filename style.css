@@ -10,28 +10,33 @@
 }
 
 :root {
-  /* 墨色系統 */
-  --ink-black: #0a0a0a;
-  --charcoal: #1a1a1a;
-  --smoke-gray: #2a2a2a;
-  --mist-gray: #505050;
-  --fog-white: #f0f0f0;
-  --paper-white: #f5f5f5;
+  /* 宣紙色系統 */
+  --paper-cream: #f8f6f0;
+  --paper-warm: #f2efe6;
+  --paper-gray: #e8e4da;
+  --ink-black: #1a1a1a;
+  --ink-gray: #3a3a3a;
+  --ink-light: #6a6a6a;
+  
+  /* Hero 區深色系統 */
+  --hero-dark: #0a0a0a;
+  --hero-charcoal: #1a1a1a;
+  --hero-smoke: #2a2a2a;
   
   /* 點綴色 */
-  --ink-blue: #6b7a92;
-  --moon-gold: #d4c4a8;
+  --ink-blue: #5a6a7a;
+  --moon-gold: #c9b896;
   
-  /* 水墨暈染陰影 */
-  --ink-glow: 0 8px 32px rgba(0, 0, 0, 0.6);
-  --ink-spread: 0 4px 16px rgba(0, 0, 0, 0.4);
-  --paper-edge: 0 2px 8px rgba(232, 232, 232, 0.1);
+  /* 陰影系統 */
+  --paper-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --card-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  --card-hover: 0 8px 24px rgba(0, 0, 0, 0.16);
 }
 
 body {
   font-family: 'Noto Sans TC', 'Segoe UI', 'Microsoft JhengHei', sans-serif;
-  background: var(--ink-black);
-  color: var(--fog-white);
+  background: var(--paper-cream);
+  color: var(--ink-black);
   line-height: 1.75;
   scroll-behavior: smooth;
   
@@ -40,10 +45,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   
-  /* 水墨紋理背景 */
+  /* 宣紙紋理背景 */
   background-image: 
-    radial-gradient(ellipse at 20% 30%, rgba(74, 85, 104, 0.08) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 70%, rgba(42, 42, 42, 0.12) 0%, transparent 60%);
+    radial-gradient(ellipse at 20% 30%, rgba(201, 184, 150, 0.03) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 70%, rgba(90, 106, 122, 0.02) 0%, transparent 60%);
   background-attachment: fixed;
 }
 
@@ -55,15 +60,15 @@ body {
 
 /* === Header 導覽列 === */
 header {
-  background: linear-gradient(180deg, var(--charcoal) 0%, rgba(26, 26, 26, 0.95) 100%);
+  background: linear-gradient(180deg, rgba(248, 246, 240, 0.98) 0%, rgba(248, 246, 240, 0.95) 100%);
   backdrop-filter: blur(12px);
-  color: var(--fog-white);
+  color: var(--ink-black);
   padding: 24px 0;
   position: sticky;
   top: 0;
   z-index: 100;
-  border-bottom: 1px solid rgba(232, 232, 232, 0.08);
-  box-shadow: var(--ink-spread);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: var(--paper-shadow);
 }
 
 .nav {
@@ -73,7 +78,7 @@ header {
 }
 
 .nav nav a {
-  color: var(--fog-white);
+  color: var(--ink-black);
   margin-left: 32px;
   text-decoration: none;
   font-weight: 400;
@@ -96,7 +101,7 @@ header {
 }
 
 .nav nav a:hover {
-  color: var(--moon-gold);
+  color: var(--ink-blue);
 }
 
 .nav nav a:hover::after {
@@ -109,7 +114,7 @@ header {
   align-items: center;
   gap: 14px;
   text-decoration: none;
-  color: var(--fog-white);
+  color: var(--ink-black);
   transition: all 0.4s ease;
 }
 
@@ -122,14 +127,14 @@ header {
   height: 36px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid rgba(232, 232, 232, 0.15);
-  box-shadow: var(--paper-edge);
+  border: 2px solid rgba(0, 0, 0, 0.12);
+  box-shadow: var(--paper-shadow);
   transition: all 0.4s ease;
 }
 
 .logo-link:hover .logo-img {
   border-color: var(--moon-gold);
-  box-shadow: 0 0 16px rgba(201, 184, 150, 0.3);
+  box-shadow: 0 0 16px rgba(201, 184, 150, 0.4);
 }
 
 .logo-text-group {
@@ -147,7 +152,7 @@ header {
 
 .logo-text-en {
   font-size: 12px;
-  color: var(--mist-gray);
+  color: var(--ink-light);
   font-weight: 500;
   letter-spacing: 0.5px;
   transition: color 0.4s ease;
@@ -160,14 +165,34 @@ header {
 /* === Hero 首頁區塊 === */
 .hero {
   background: linear-gradient(135deg, 
-    var(--charcoal) 0%, 
-    var(--smoke-gray) 50%, 
-    var(--charcoal) 100%);
-  color: var(--fog-white);
+    var(--hero-charcoal) 0%, 
+    var(--hero-smoke) 50%, 
+    var(--hero-charcoal) 100%);
+  color: #f0f0f0;
   padding: 160px 0;
   text-align: center;
   position: relative;
   overflow: hidden;
+  
+  /* 支援背景圖片 */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* 深色遮罩層，讓文字更清楚 */
+.hero::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, 
+    rgba(10, 10, 10, 0.7) 0%, 
+    rgba(26, 26, 26, 0.6) 50%, 
+    rgba(10, 10, 10, 0.7) 100%);
+  z-index: 0;
 }
 
 .hero::before {
@@ -179,6 +204,7 @@ header {
   height: 200%;
   background: radial-gradient(ellipse at center, rgba(74, 85, 104, 0.15) 0%, transparent 70%);
   animation: inkFlow 20s ease-in-out infinite;
+  z-index: 0;
 }
 
 @keyframes inkFlow {
@@ -193,14 +219,14 @@ header {
   letter-spacing: 1.5px;
   position: relative;
   z-index: 1;
-  color: var(--fog-white);
+  color: #f0f0f0;
 }
 
 .hero p {
   font-size: 16px;
   font-weight: 300;
   letter-spacing: 0.5px;
-  color: #b8b8b8;
+  color: #d0d0d0;
   position: relative;
   z-index: 1;
   max-width: 600px;
@@ -210,7 +236,7 @@ header {
 
 /* === 素材庫介紹區 === */
 .resources-intro {
-  background: var(--ink-black);
+  background: var(--paper-warm);
   text-align: center;
   padding: 120px 0;
   position: relative;
@@ -221,19 +247,19 @@ header {
   font-weight: 600;
   margin-bottom: 16px;
   letter-spacing: 1px;
-  color: var(--fog-white);
+  color: var(--ink-black);
 }
 
 .resources-intro p {
   font-size: 15px;
   font-weight: 300;
-  color: var(--mist-gray);
+  color: var(--ink-gray);
   letter-spacing: 0.3px;
 }
 
 /* === 素材入口卡片區 === */
 .resource-portal {
-  background: var(--charcoal);
+  background: var(--paper-cream);
   padding: 100px 0 120px;
 }
 
@@ -246,13 +272,13 @@ header {
 
 .card {
   width: 280px;
-  background: linear-gradient(135deg, var(--smoke-gray) 0%, var(--charcoal) 100%);
+  background: linear-gradient(135deg, #ffffff 0%, var(--paper-warm) 100%);
   border-radius: 10px;
   text-align: center;
   text-decoration: none;
-  color: var(--fog-white);
-  box-shadow: var(--ink-spread);
-  border: 1px solid rgba(232, 232, 232, 0.08);
+  color: var(--ink-black);
+  box-shadow: var(--card-shadow);
+  border: 1px solid rgba(0, 0, 0, 0.08);
   overflow: hidden;
   transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
@@ -265,7 +291,7 @@ header {
   left: 0;
   width: 100%;
   height: 100%;
-  background: radial-gradient(circle at center, rgba(201, 184, 150, 0.1) 0%, transparent 70%);
+  background: radial-gradient(circle at center, rgba(201, 184, 150, 0.08) 0%, transparent 70%);
   opacity: 0;
   transition: opacity 0.5s ease;
 }
@@ -276,7 +302,7 @@ header {
 
 .card:hover {
   transform: translateY(-6px);
-  box-shadow: var(--ink-glow);
+  box-shadow: var(--card-hover);
   border-color: rgba(201, 184, 150, 0.3);
 }
 
@@ -286,7 +312,7 @@ header {
   object-fit: cover;
   border-radius: 10px 10px 0 0;
   transition: all 0.5s ease;
-  filter: grayscale(20%);
+  filter: grayscale(10%);
 }
 
 .card:hover img {
@@ -305,16 +331,16 @@ header {
   margin-bottom: 18px;
   font-size: 13px;
   font-weight: 300;
-  color: var(--mist-gray);
+  color: var(--ink-gray);
   padding: 0 16px;
 }
 
 /* === Footer 頁尾 === */
 footer {
-  background: var(--charcoal);
-  color: var(--mist-gray);
+  background: var(--paper-warm);
+  color: var(--ink-gray);
   padding: 80px 0;
-  border-top: 1px solid rgba(232, 232, 232, 0.08);
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 .footer-content {
@@ -348,8 +374,8 @@ footer {
    ======================================== */
 
 .featured-carousel {
-  background: var(--ink-black);
-  color: var(--fog-white);
+  background: var(--paper-cream);
+  color: var(--ink-black);
   padding: 120px 0;
   position: relative;
 }
@@ -374,17 +400,17 @@ footer {
 
 /* 箭頭按鈕 */
 .arrow {
-  background: linear-gradient(135deg, var(--smoke-gray) 0%, var(--mist-gray) 100%);
-  color: var(--fog-white);
+  background: linear-gradient(135deg, #ffffff 0%, var(--paper-gray) 100%);
+  color: var(--ink-black);
   font-size: 20px;
-  border: 1px solid rgba(232, 232, 232, 0.12);
+  border: 1px solid rgba(0, 0, 0, 0.12);
   padding: 10px 14px;
   border-radius: 6px;
   cursor: pointer;
   opacity: 0;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 10;
-  box-shadow: var(--ink-spread);
+  box-shadow: var(--card-shadow);
 }
 
 .carousel-wrapper:hover .arrow {
@@ -392,9 +418,10 @@ footer {
 }
 
 .arrow:hover {
-  background: linear-gradient(135deg, var(--mist-gray) 0%, var(--ink-blue) 100%);
+  background: linear-gradient(135deg, var(--paper-gray) 0%, var(--ink-blue) 100%);
+  color: #ffffff;
   transform: scale(1.08);
-  box-shadow: var(--ink-glow);
+  box-shadow: var(--card-hover);
 }
 
 .carousel-window {
@@ -422,11 +449,12 @@ footer {
   border-radius: 10px;
   overflow: hidden;
   flex-shrink: 0;
-  box-shadow: var(--ink-spread);
-  border: 1px solid rgba(232, 232, 232, 0.08);
+  box-shadow: var(--card-shadow);
+  border: 1px solid rgba(0, 0, 0, 0.08);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   opacity: 0;
   transform: translateY(20px);
+  background: #ffffff;
 }
 
 .video-card.loaded {
@@ -436,16 +464,17 @@ footer {
 
 .video-card:hover {
   transform: translateY(-4px);
-  box-shadow: var(--ink-glow);
-  border-color: rgba(201, 184, 150, 0.2);
+  box-shadow: var(--card-hover);
+  border-color: rgba(201, 184, 150, 0.3);
 }
 
 .video-shell {
   position: relative;
   width: 100%;
   height: 460px;
-  background: var(--charcoal);
+  background: #000000;
   overflow: hidden;
+}
 }
 
 .lazy-iframe {
