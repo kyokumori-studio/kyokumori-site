@@ -168,7 +168,7 @@ header {
     var(--hero-charcoal) 0%, 
     var(--hero-smoke) 50%, 
     var(--hero-charcoal) 100%);
-  color: #ffffff;
+  color: #f0f0f0;
   padding: 160px 0;
   text-align: center;
   position: relative;
