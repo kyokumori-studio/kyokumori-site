@@ -189,9 +189,9 @@ header {
   width: 100%;
   height: 100%;
   background: linear-gradient(135deg, 
-    rgba(10, 10, 10, 0.7) 0%, 
-    rgba(26, 26, 26, 0.6) 50%, 
-    rgba(10, 10, 10, 0.7) 100%);
+    rgba(10, 10, 10, 0.3) 0%, 
+    rgba(26, 26, 26, 0.2) 50%, 
+    rgba(10, 10, 10, 0.3) 100%);
   z-index: 0;
 }
 
@@ -466,6 +466,18 @@ footer {
   height: 460px;
   display: block;
   border: none;
+}
+
+.video-placeholder {
+  width: 100%;
+  height: 460px;
+  background: linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-light);
+  font-size: 14px;
+  font-weight: 300;
 }
 
 /* === 輪播指示點 === */
