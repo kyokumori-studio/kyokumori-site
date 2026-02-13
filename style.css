@@ -515,46 +515,192 @@ footer {
    ======================================== */
 
 @media (max-width: 768px) {
+  /* 容器留白縮小 */
   .container {
-    padding: 0 24px;
+    padding: 0 20px;
   }
   
-  .hero {
-    padding: 100px 0;
-  }
-  
-  .hero h1 {
-    font-size: 28px;
-  }
-  
-  .hero p {
-    font-size: 14px;
-  }
-  
-  .section-title {
-    font-size: 24px;
-  }
-  
-  .resources-intro {
-    padding: 80px 0;
-  }
-  
-  .resource-portal {
-    padding: 60px 0 80px;
-  }
-  
-  .footer-content {
-    flex-direction: column;
-    text-align: center;
+  /* === Header 手機版 === */
+  header {
+    padding: 16px 0;
   }
   
   .nav {
     flex-direction: column;
     gap: 16px;
+    align-items: flex-start;
+  }
+  
+  .logo-link {
+    width: 100%;
+  }
+  
+  .nav nav {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 8px;
   }
   
   .nav nav a {
     margin-left: 0;
-    margin: 0 12px;
+    font-size: 13px;
+    padding: 8px 12px;
+  }
+  
+  /* === Hero 手機版 === */
+  .hero {
+    padding: 80px 0;
+    background-position: center;
+    background-size: cover;
+  }
+  
+  .hero h1 {
+    font-size: 24px;
+    margin-bottom: 16px;
+    letter-spacing: 1px;
+  }
+  
+  .hero p {
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 0 10px;
+  }
+  
+  /* === 作品集輪播 手機版 === */
+  .featured-carousel {
+    padding: 60px 0;
+  }
+  
+  .section-title {
+    font-size: 22px;
+    margin-bottom: 32px;
+  }
+  
+  .carousel-wrapper {
+    gap: 12px;
+  }
+  
+  /* 手機上隱藏箭頭，改用滑動 */
+  .arrow {
+    display: none;
+  }
+  
+  .carousel-window {
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none; /* Firefox */
+  }
+  
+  .carousel-window::-webkit-scrollbar {
+    display: none; /* Chrome, Safari */
+  }
+  
+  .carousel {
+    gap: 16px;
+  }
+  
+  .video-card {
+    width: 260px;
+    scroll-snap-align: center;
+  }
+  
+  .video-card iframe,
+  .video-placeholder {
+    height: 420px;
+  }
+  
+  /* 指示點間距調整 */
+  .carousel-dots {
+    margin-top: 24px;
+    gap: 8px;
+  }
+  
+  .carousel-dot {
+    width: 6px;
+    height: 6px;
+  }
+  
+  .carousel-dot.active {
+    width: 20px;
+  }
+  
+  /* === 素材庫介紹區 手機版 === */
+  .resources-intro {
+    padding: 60px 0;
+  }
+  
+  .resources-intro h2 {
+    font-size: 22px;
+  }
+  
+  .resources-intro p {
+    font-size: 14px;
+    padding: 0 10px;
+  }
+  
+  /* === 素材入口卡片 手機版 === */
+  .resource-portal {
+    padding: 40px 0 60px;
+  }
+  
+  .cards {
+    gap: 24px;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .card {
+    width: 100%;
+    max-width: 320px;
+  }
+  
+  .card img {
+    height: 180px;
+  }
+  
+  /* === Footer 手機版 === */
+  footer {
+    padding: 40px 0;
+  }
+  
+  .footer-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 24px;
+  }
+  
+  .footer-left p,
+  .footer-right p {
+    font-size: 12px;
+    line-height: 1.8;
+  }
+}
+
+/* 更小的手機 (iPhone SE 等) */
+@media (max-width: 375px) {
+  .hero h1 {
+    font-size: 20px;
+  }
+  
+  .hero p {
+    font-size: 13px;
+  }
+  
+  .video-card {
+    width: 240px;
+  }
+  
+  .video-card iframe,
+  .video-placeholder {
+    height: 380px;
+  }
+  
+  .section-title {
+    font-size: 20px;
   }
 }
