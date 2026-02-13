@@ -3,21 +3,21 @@
 <html lang="zh-Hant"> <!-- 網頁語言設定為繁體中文 -->
 
 <head>
-  <meta charset="utf-8" /> <!-- 設定編碼為 UTF-8，支援中文 -->
+  <meta charset="utf-8" /> <!-- 設定編碼為 UTF-8,支援中文 -->
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
   <title>曲守工作室 Kyokumori Studio</title> <!-- 標題列顯示的名稱 -->
-  <link href="style.css" rel="stylesheet" /> <!-- 外部 CSS 樣式表連結 -->
+  <link href="style.css?v=2" rel="stylesheet" /> <!-- 外部 CSS 樣式表連結 -->
 </head>
 
 <body>
-  <!-- 網站上方導覽列（Header） -->
+  <!-- 網站上方導覽列(Header) -->
   <header>
     <div class="container nav">
-      <!-- ✅ 改為乾淨對齊的 logo 標區：圖片 + 中文 + 英文 -->
+      <!-- ✅ 改為乾淨對齊的 logo 標區:圖片 + 中文 + 英文 -->
       <a class="logo-link" href="/">
         <!-- 圓形 logo 圖片 -->
         <img alt="Logo" class="logo-img" src="logo.png" />
-        <!-- 文字組合：中文主標＋英文副標（同行） -->
+        <!-- 文字組合:中文主標＋英文副標(同行) -->
         <div class="logo-text-group">
           <span class="logo-text-zh">曲守工作室</span>
           <span class="logo-text-en">Kyokumori Studio</span>
@@ -32,11 +32,11 @@
       </nav>
     </div>
   </header>
-  <!-- Hero 區（首頁第一印象區塊） -->
+  <!-- Hero 區(首頁第一印象區塊) -->
   <section class="hero">
     <div class="container">
       <h1>曲守工作室 Kyokumori Studio</h1>
-      <p>創作 × 技術 × 即時互動，構築角色與觀眾的連結橋梁</p>
+      <p>創作 × 技術 × 即時互動,構築角色與觀眾的連結橋梁</p>
     </div>
   </section>
   <!--作品集-->
@@ -49,7 +49,7 @@
           <div class="carousel" id="video-carousel">
             <div class="video-card">
               <div class="video-shell">
-                <iframe loading="lazy" decoding="async" width="337" height="599"
+                <iframe loading="lazy" width="337" height="599"
                   src="https://www.youtube.com/embed/at9pIv1SDfE" frameborder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                   referrerpolicy="strict-origin-when-cross-origin" allowfullscreen class="lazy-iframe"></iframe>
@@ -57,7 +57,7 @@
             </div>
             <div class="video-card">
               <div class="video-shell">
-                <iframe loading="lazy" decoding="async" width="337" height="599"
+                <iframe loading="lazy" width="337" height="599"
                   src="https://www.youtube.com/embed/Z5gCOttIj9E" frameborder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                   referrerpolicy="strict-origin-when-cross-origin" allowfullscreen class="lazy-iframe"></iframe>
@@ -65,7 +65,7 @@
             </div>
             <div class="video-card">
               <div class="video-shell">
-                <iframe loading="lazy" decoding="async" width="337" height="599"
+                <iframe loading="lazy" width="337" height="599"
                   src="https://www.youtube.com/embed/at9pIv1SDfE" frameborder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                   referrerpolicy="strict-origin-when-cross-origin" allowfullscreen class="lazy-iframe"></iframe>
@@ -73,7 +73,7 @@
             </div>
             <div class="video-card">
               <div class="video-shell">
-                <iframe loading="lazy" decoding="async" width="337" height="599"
+                <iframe loading="lazy" width="337" height="599"
                   src="https://www.youtube.com/embed/Z5gCOttIj9E" frameborder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                   referrerpolicy="strict-origin-when-cross-origin" allowfullscreen class="lazy-iframe"></iframe>
@@ -81,7 +81,7 @@
             </div>
             <div class="video-card">
               <div class="video-shell">
-                <iframe loading="lazy" decoding="async" width="337" height="599"
+                <iframe loading="lazy" width="337" height="599"
                   src="https://www.youtube.com/embed/at9pIv1SDfE" frameborder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                   referrerpolicy="strict-origin-when-cross-origin" allowfullscreen class="lazy-iframe"></iframe>
@@ -97,7 +97,7 @@
   <section class="resources-intro" id="resources">
     <div class="container">
       <h2>免費素材庫 Free Resources</h2>
-      <p>提供免費音樂、音效與視覺素材，幫助你輕鬆創作！</p>
+      <p>提供免費音樂、音效與視覺素材,幫助你輕鬆創作!</p>
     </div>
   </section>
   <!-- 三分類入口卡片區 -->
@@ -123,12 +123,12 @@
       </a>
     </div>
   </section>
-  <!-- 頁尾區塊（Footer） -->
+  <!-- 頁尾區塊(Footer) -->
   <footer>
     <div class="container footer-content">
       <div class="footer-left">
         <p>© 2026 曲守工作室 Kyokumori Studio.</p>
-        <p>以角色為核心，連結創作、技術與觀眾的情感橋梁。</p>
+        <p>以角色為核心,連結創作、技術與觀眾的情感橋樑。</p>
       </div>
       <div class="footer-right">
         <p>📧 hello@kyokumori.studio</p>
@@ -138,17 +138,26 @@
     </div>
   </footer>
   <script>
+    // ========================================
+    // 🎞️ 輪播系統優化版
+    // ========================================
+    
     const carousel = document.getElementById("video-carousel");
     const gap = 24;
     let cardWidth;
     let isAnimating = false;
     let autoScrollTimer;
     let isHovered = false;
+    let isInitialized = false;
 
+    // 延遲初始化,等 DOM 完全載入後再執行
     function setupCarousel() {
       const rawCards = Array.from(carousel.querySelectorAll('.video-card'));
+      if (rawCards.length === 0) return;
+      
       cardWidth = rawCards[0].offsetWidth + gap;
 
+      // 複製首尾卡片實現無縫輪播
       const first = rawCards[0].cloneNode(true);
       const last = rawCards[rawCards.length - 1].cloneNode(true);
       first.classList.add('is-clone');
@@ -157,15 +166,16 @@
       carousel.insertBefore(last, rawCards[0]);
       carousel.appendChild(first);
 
+      // 設定初始位置
       carousel.style.transform = `translateX(-${cardWidth}px)`;
+      isInitialized = true;
 
-      autoScrollTimer = setInterval(() => {
-        if (!isHovered) scrollCarousel(1);
-      }, 5000);
+      // 啟動自動輪播
+      startAutoScroll();
     }
 
     function scrollCarousel(direction) {
-      if (isAnimating) return;
+      if (isAnimating || !isInitialized) return;
       isAnimating = true;
 
       const move = direction * cardWidth;
@@ -192,10 +202,10 @@
 
         carousel.style.transform = `translateX(-${cardWidth}px)`;
 
-        // 移除所有 clone
+        // 移除舊 clone
         Array.from(carousel.querySelectorAll(".is-clone")).forEach(c => c.remove());
 
-        // 補上新的 clone
+        // 補上新 clone
         const updatedCards = Array.from(carousel.querySelectorAll('.video-card'));
         const newFirst = updatedCards[0].cloneNode(true);
         const newLast = updatedCards[updatedCards.length - 1].cloneNode(true);
@@ -214,6 +224,13 @@
       return matrix.m41;
     }
 
+    function startAutoScroll() {
+      clearInterval(autoScrollTimer);
+      autoScrollTimer = setInterval(() => {
+        if (!isHovered) scrollCarousel(1);
+      }, 5000);
+    }
+
     function pauseAutoScroll() {
       isHovered = true;
       clearInterval(autoScrollTimer);
@@ -221,10 +238,7 @@
 
     function resumeAutoScroll() {
       isHovered = false;
-      clearInterval(autoScrollTimer);
-      autoScrollTimer = setInterval(() => {
-        if (!isHovered) scrollCarousel(1);
-      }, 5000);
+      startAutoScroll();
     }
 
     function hoverEnter() {
@@ -245,15 +259,29 @@
       document.querySelectorAll(".arrow").forEach(btn => btn.style.opacity = 0);
     }
 
-    window.addEventListener("load", () => {
-      setupCarousel();
-    });
-
-    document.querySelectorAll('.lazy-iframe').forEach(iframe => {
-      iframe.addEventListener('load', () => {
-        iframe.style.opacity = '1';
+    // 優化影片載入
+    function initLazyIframes() {
+      const iframes = document.querySelectorAll('.lazy-iframe');
+      iframes.forEach(iframe => {
+        iframe.addEventListener('load', function() {
+          this.classList.add('loaded');
+          // 移除載入提示
+          const shell = this.closest('.video-shell');
+          if (shell) shell.style.setProperty('--loading', 'none');
+        });
       });
-    });
+    }
+
+    // 頁面載入完成後初始化
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => {
+        setupCarousel();
+        initLazyIframes();
+      });
+    } else {
+      setupCarousel();
+      initLazyIframes();
+    }
 
   </script>
 </body>

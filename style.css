@@ -14,13 +14,13 @@
   --ink-black: #0a0a0a;
   --charcoal: #1a1a1a;
   --smoke-gray: #2a2a2a;
-  --mist-gray: #3a3a3a;
-  --fog-white: #e8e8e8;
+  --mist-gray: #505050;
+  --fog-white: #f0f0f0;
   --paper-white: #f5f5f5;
   
   /* 點綴色 */
-  --ink-blue: #4a5568;
-  --moon-gold: #c9b896;
+  --ink-blue: #6b7a92;
+  --moon-gold: #d4c4a8;
   
   /* 水墨暈染陰影 */
   --ink-glow: 0 8px 32px rgba(0, 0, 0, 0.6);
@@ -29,11 +29,16 @@
 }
 
 body {
-  font-family: 'Noto Sans TC', 'Segoe UI', sans-serif;
+  font-family: 'Noto Sans TC', 'Segoe UI', 'Microsoft JhengHei', sans-serif;
   background: var(--ink-black);
   color: var(--fog-white);
   line-height: 1.75;
   scroll-behavior: smooth;
+  
+  /* 文字渲染優化 */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
   
   /* 水墨紋理背景 */
   background-image: 
@@ -183,19 +188,19 @@ header {
 
 .hero h1 {
   font-size: 48px;
-  font-weight: 800;
+  font-weight: 700;
   margin-bottom: 24px;
   letter-spacing: 2px;
   position: relative;
   z-index: 1;
-  text-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
+  color: var(--fog-white);
 }
 
 .hero p {
   font-size: 18px;
   font-weight: 400;
   letter-spacing: 1px;
-  color: var(--mist-gray);
+  color: #b8b8b8;
   position: relative;
   z-index: 1;
   max-width: 700px;
@@ -433,15 +438,31 @@ footer {
   overflow: hidden;
 }
 
+.video-shell::before {
+  content: '載入中...';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--mist-gray);
+  font-size: 14px;
+  z-index: 1;
+}
+
 .lazy-iframe {
   width: 100%;
   height: 100%;
   opacity: 0;
-  transition: opacity 0.6s ease;
+  transition: opacity 0.5s ease;
   border: none;
   position: absolute;
   top: 0;
   left: 0;
+  z-index: 2;
+}
+
+.lazy-iframe.loaded {
+  opacity: 1;
 }
 
 /* ========================================
