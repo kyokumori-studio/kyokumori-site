@@ -426,7 +426,7 @@ footer {
 
 .carousel-window {
   width: 100%;
-  max-width: 904px; /* 3張卡片(280*3) + 2個間距(32*2) = 904px，加點餘裕 */
+  max-width: 968px; /* 3張卡片(280*3) + 2個間距(32*2) = 904px，加點餘裕 */
   overflow: hidden;
 }
 
